@@ -1,0 +1,119 @@
+<header class="header-top" id="top">
+  <div class="container">
+    <div class="nav-left">
+      <div>{{ loichao["detail"] }}</div>
+    </div>
+    <div class="nav-right">
+      <div class="address">
+        {{ address["detail"] }}
+      </div>
+      <div class="phone">
+        <span style="color: white">Điện thoại: </span>
+        <a href="tel:{{ phone['detail'] }}">{{ all_phone["detail"] }}</a>
+      </div>
+    </div>
+  </div>
+</header>
+<header class="main-header-mobile">
+  <div class="container">
+    <div class="nav-left">
+      <a routerLink="/">
+        <img src="{{ logo_mobile['url'] }}" alt="{{ logo_mobile['name'] }}"
+      /></a>
+    </div>
+    <div class="nav-right">
+      <span class="button-bar" (click)="openNavMobile()"
+        ><i class="fa-solid fa-bars"></i
+      ></span>
+    </div>
+  </div>
+</header>
+<header class="main-header">
+  <div class="container">
+    <div class="nav-left">
+      <a routerLink="/">
+        <img src="{{ logo['url'] }}" alt="{{ logo['name'] }}" width="150px"
+      /></a>
+    </div>
+    <div class="nav-right">
+      <ul class="nav">
+        <li class="nav-item" *ngFor="let item of nav">
+          <ng-container *ngIf="item['show_in'] == 'navbar'">
+            <ng-container
+              *ngIf="item['type_show'] == 'link'; else elseTemplate"
+            >
+              <a
+                class="nav-link"
+                id="sub-menu"
+                routerLinkActive="active"
+                routerLink="{{ item['url'] }}"
+                [routerLinkActiveOptions]="{ exact: true }"
+                >{{ item["name"] }}
+                <i
+                  class="fa-solid fa-chevron-down"
+                  *ngIf="item['children'] !== null"
+                ></i>
+              </a>
+              <ul class="item-drop" *ngIf="item['children'] !== null">
+                <li *ngFor="let children of item['children']">
+                  <a routerLink="{{ children['url'] }}">{{
+                    children["name"]
+                  }}</a>
+                </li>
+              </ul>
+            </ng-container>
+            <ng-template #elseTemplate>
+              <a class="btn" routerLink="{{ item['url'] }}"
+                >{{item['name']}}</a
+              >
+            </ng-template>
+          </ng-container>
+        </li>
+      </ul>
+    </div>
+  </div>
+</header>
+<div
+  class="site-mask"
+  [ngClass]="{ active: NavMobile }"
+  (click)="closeNav()"
+></div>
+<div class="list-nav" [ngClass]="{ active: NavMobile }">
+  <div class="header-nav">
+    <div><h3>Menu</h3></div>
+    <div class="icon-close">
+      <span class="button-close-nav" (click)="closeNav()"
+        ><svg
+          width="20px"
+          height="20px"
+          viewBox="-2.4 -2.4 28.80 28.80"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          transform="matrix(1, 0, 0, 1, 0, 0)rotate(270)"
+        >
+          <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+          <g
+            id="SVGRepo_tracerCarrier"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          ></g>
+          <g id="SVGRepo_iconCarrier">
+            <path
+              d="M4.70711 3.29289C4.31658 2.90237 3.68342 2.90237 3.29289 3.29289C2.90237 3.68342 2.90237 4.31658 3.29289 4.70711L10.5858 12L3.29289 19.2929C2.90237 19.6834 2.90237 20.3166 3.29289 20.7071C3.68342 21.0976 4.31658 21.0976 4.70711 20.7071L12 13.4142L19.2929 20.7071C19.6834 21.0976 20.3166 21.0976 20.7071 20.7071C21.0976 20.3166 21.0976 19.6834 20.7071 19.2929L13.4142 12L20.7071 4.70711C21.0976 4.31658 21.0976 3.68342 20.7071 3.29289C20.3166 2.90237 19.6834 2.90237 19.2929 3.29289L12 10.5858L4.70711 3.29289Z"
+            ></path>
+          </g>
+        </svg>
+      </span>
+    </div>
+  </div>
+  <ul class="nav">
+    <li class="nav-item" *ngFor="let item of nav">
+      <a
+        class="nav-link"
+        routerLink="{{ item['url'] }}"
+        routerLinkActive="active"
+        >{{ item["name"] }}</a
+      >
+    </li>
+  </ul>
+</div>

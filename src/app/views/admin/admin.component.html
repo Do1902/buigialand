@@ -1,0 +1,14 @@
+<ng-container
+  *ngIf="(loading$ | async) || (error$ | async); else authOutletTemplate"
+>
+  <div *ngIf="loading$ | async">
+    <div class="loading" id="loader">
+      <div class="loader"></div>
+    </div>
+  </div>
+  <div *ngIf="error$ | async"><app-login-dash></app-login-dash></div>
+</ng-container>
+
+<ng-template #authOutletTemplate>
+  <router-outlet></router-outlet>
+</ng-template>

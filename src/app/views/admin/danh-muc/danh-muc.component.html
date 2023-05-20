@@ -1,0 +1,101 @@
+<ng-container *ngIf="loading == true; else elseTemplate">
+  <div
+    style="
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    "
+  >
+    <div class="spinner-border" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+</ng-container>
+<ng-template #elseTemplate>
+  <div class="main">
+    <h3>Danh mục cha</h3>
+    <div class="table">
+      <table>
+        <thead>
+          <th>Stt</th>
+          <th>Mã danh mục</th>
+          <th>Tên</th>
+          <th>Hiển thị dạng</th>
+          <th>Tác vụ</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of danhmucEdit">
+            <ng-container *ngIf="item['show_in'] == 'navbar'">
+              <td>{{ item["stt"] }}</td>
+              <th>{{ item["id"] }}</th>
+              <td>{{ item["name"] }}</td>
+              <td>
+                <select name="" id="" [(ngModel)]="item['type_show']">
+                  <option value="link">Link</option>
+                  <option value="button">Button</option>
+                </select>
+              </td>
+              <td>
+                <button (click)="moveTop(item)">
+                  <i class="fa-solid fa-angles-up"></i>
+                </button>
+                <button (click)="moveUp(item)">
+                  <i class="fa-solid fa-angle-up"></i>
+                </button>
+                <button (click)="moveBottom(item)">
+                  <i class="fa-solid fa-angles-down"></i>
+                </button>
+                <button (click)="moveDown(item)">
+                  <i class="fa-solid fa-angle-down"></i>
+                </button>
+              </td>
+            </ng-container>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <ng-container *ngIf="danhmuccon.length > 0">
+      <h3>Danh mục con</h3>
+      <div class="table">
+        <table>
+          <thead>
+            <th>Mã danh mục cha</th>
+            <th>Tên</th>
+            <th>Tác vụ</th>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of danhmuccon">
+              <th>
+                <select name="" id="" [(ngModel)]="item['id_parent']">
+                  <ng-container *ngFor="let item1 of danhmucEdit">
+                    <option
+                      value="{{ item1['id'] }}"
+                      *ngIf="item1['type_show'] != 'button'"
+                    >
+                      {{ item1["id"] }}
+                    </option>
+                  </ng-container>
+                </select>
+              </th>
+              <td>{{ item["name"] }}</td>
+              <td>
+                <button (click)="onDelete(item)">
+                  <i class="fa-solid fa-xmark"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </ng-container>
+  </div>
+  <div class="main2">
+    <button (click)="SaveDanhMuc()">Lưu thay đổi</button>
+  </div>
+
+  <div class="loading" id="loader" *ngIf="waitSave == true">
+    <div class="loader"></div>
+  </div>
+</ng-template>

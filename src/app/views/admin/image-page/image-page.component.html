@@ -1,0 +1,121 @@
+<ng-container *ngIf="loading == true; else elseTemplate">
+  <div
+    style="
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    "
+  >
+    <div class="spinner-border" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div> </ng-container
+><ng-template #elseTemplate>
+  <div class="main">
+    <div class="title">Carousel ( ít nhất 2 ảnh )</div>
+    <div class="data">
+      <table>
+        <thead>
+          <th>STT</th>
+          <th>Ảnh</th>
+          <th>Tác vụ</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of carousel">
+            <td>{{ item["stt"] }}</td>
+            <td>
+              <img [src]="item['url']" alt="" />
+            </td>
+            <td>
+              <button (click)="moveTop(item)">
+                <i class="fa-solid fa-angles-up"></i>
+              </button>
+              <button (click)="moveUp(item)">
+                <i class="fa-solid fa-angle-up"></i>
+              </button>
+              <button (click)="moveBottom(item)">
+                <i class="fa-solid fa-angles-down"></i>
+              </button>
+              <button (click)="moveDown(item)">
+                <i class="fa-solid fa-angle-down"></i>
+              </button>
+              <button>
+                <label class="change">
+                  <i class="fa-solid fa-rotate"></i>
+                  <input
+                    type="file"
+                    class="d-none"
+                    (change)="onChangeImage($event, item)"
+                    accept="image/*"
+                    aria-labelledby="imageUploadLabel"
+                  />
+                </label>
+              </button>
+              <button (click)="DeleteCarousel(item)">
+                <i class="fa-solid fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="section">
+        <label for="file" class="custom-file-label">Thêm ảnh</label>
+        <input
+          type="file"
+          accept="image/*"
+          id="file"
+          style="display: none"
+          (change)="addImageToCarousel($event)"
+        />
+      </div>
+    </div>
+    <div class="title mt-3">Banner 1</div>
+    <div class="secion">
+      <img
+        [src]="newBanner1 == '' ? banner1['url'] : newBanner1"
+        alt=""
+        width="100%"
+      />
+      <br />
+      <label for="file1" class="custom-file-label"> Chọn ảnh </label>
+      <input
+        type="file"
+        accept="image/*"
+        id="file1"
+        #fileInput
+        style="display: none"
+        (change)="onFileSelected(fileInput, 'banner1')"
+      />
+    </div>
+    <div class="title mt-3">Banner 2</div>
+    <div class="secion">
+      <img
+        [src]="newBanner2 == '' ? banner2['url'] : newBanner2"
+        alt=""
+        width="100%"
+      />
+      <br />
+      <label for="file2" class="custom-file-label"> Chọn ảnh </label>
+      <input
+        type="file"
+        accept="image/*"
+        id="file2"
+        #fileInput1
+        style="display: none"
+        (change)="onFileSelected(fileInput1, 'banner2')"
+      />
+    </div>
+    <div class="section">
+      <div class="actions">
+        <div class="item">
+          <button class="save" (click)="SaveImage()">Lưu thay đổi</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="loading" id="loader" *ngIf="waitSave == true">
+    <div class="loader"></div>
+  </div>
+</ng-template>

@@ -1,0 +1,15 @@
+<ng-container *ngIf="loading$ | async; else elseTemplate">
+  <div class="loading" id="loader">
+    <div class="loader"></div>
+  </div>
+</ng-container>
+<ng-template #elseTemplate>
+  <ng-container *ngIf="error$ | async; else elseTemplate">
+    <app-page500></app-page500>
+  </ng-container>
+  <ng-template #elseTemplate>
+    <app-header></app-header>
+    <router-outlet></router-outlet>
+    <app-footer></app-footer>
+  </ng-template>
+</ng-template>

@@ -1,0 +1,378 @@
+<ng-container *ngIf="loading$ | async; else elseTemplate">
+  <div
+    style="
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    "
+  >
+    <div class="spinner-border" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+</ng-container>
+<ng-template #elseTemplate>
+  <ng-container *ngIf="error$ | async; else elseTemplate">
+    <div>Tạch api rồi</div>
+  </ng-container>
+  <ng-template #elseTemplate>
+    <section class="main-carousel">
+      <button class="prev" (click)="prev()">
+        <i class="fa-solid fa-chevron-left"></i>
+      </button>
+      <button class="next" (click)="next()">
+        <i class="fa-solid fa-chevron-right"></i>
+      </button>
+      <ngx-slick-carousel
+        class="carousel"
+        #slickModal="slick-carousel"
+        [config]="slideConfig"
+      >
+        <div ngxSlickItem *ngFor="let slide of slides" class="slide">
+          <img src="{{ slide }}" alt="" width="100%" />
+        </div>
+      </ngx-slick-carousel>
+      <section class="form-search">
+        <div class="form-search1">
+          <div class="left">
+            <div class="select-form">
+              <select name="" id="select-box">
+                <option value="0">Loại nhà đất</option>
+                <option
+                  *ngFor="let item of select_loainhadats"
+                  value="{{ item['id'] }}"
+                >
+                  {{ item["name"] }}
+                </option>
+              </select>
+            </div>
+            <input type="text" placeholder="Tìm kiếm bất động sản bạn cần..." />
+          </div>
+          <div class="right">
+            <button type="button" class="search1">Tìm kiếm</button>
+            <button class="search2" (click)="opensearch2()">
+              Tìm kiếm nâng cao <i class="fa-solid fa-caret-down"></i>
+            </button>
+          </div>
+        </div>
+        <div class="form-search2" [ngClass]="{ active: search2 }">
+          <div class="top">
+            <div class="address">
+              <label for="address">Địa chỉ</label>
+              <br />
+              <input type="text" id="address" placeholder="Ví dụ: Sao hỏa..." />
+            </div>
+            <div class="city">
+              <label for="city">Tỉnh/Thành phố</label>
+              <br />
+              <select
+                name=""
+                id="city"
+                [(ngModel)]="selectedCity"
+                (ngModelChange)="onChangeCity($event)"
+              >
+                <option value="0">---Tất cả---</option>
+                <option *ngFor="let item of citys" value="{{ item['code'] }}">
+                  {{ item["full_name"] }}
+                </option>
+              </select>
+            </div>
+            <div class="district">
+              <label for="district">Quận/Huyện</label>
+              <br />
+              <select name="" id="district">
+                <option value="0">---Tất cả---</option>
+                <option
+                  *ngFor="let item of districtsCopy"
+                  value="{{ item['value'] }}"
+                >
+                  {{ item["full_name"] }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="bottom">
+            <div class="huong">
+              <label for="huong">Hướng</label>
+              <br />
+              <select name="" id="huong">
+                <option value="0">---Tất cả---</option>
+                <option *ngFor="let item of huongnhas" value="{{ item['id'] }}">
+                  {{ item["name"] }}
+                </option>
+              </select>
+            </div>
+            <div class="dientich">
+              <label for="dientich">Diện tích</label>
+              <br />
+              <select name="" id="dientich">
+                <option value="0">---Tất cả---</option>
+                <option *ngFor="let item of dientichs" value="{{ item['id'] }}">
+                  {{ item["name"] }}
+                </option>
+              </select>
+            </div>
+            <div class="mucgia">
+              <label for="mucgia">Mức giá</label>
+              <br />
+              <select name="" id="mucgia">
+                <option value="0">---Tất cả---</option>
+                <option *ngFor="let item of prices" value="{{ item['id'] }}">
+                  {{ item["name"] }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="search2-button">
+            <button>Tìm kiếm</button>
+          </div>
+        </div>
+      </section>
+    </section>
+    <section class="blog-hot">
+      <header class="header-blog-hot">
+        <h3>{{ title_bds_hot["name"] }}</h3>
+        <a routerLink="{{ title_bds_hot['url'] }}"
+          >Xem thêm <i class="fa-solid fa-angles-right"></i
+        ></a>
+      </header>
+    </section>
+    <section class="main-blog-hot">
+      <button (click)="prev2()" class="blog-prev">
+        <i class="fa-solid fa-chevron-left"></i>
+      </button>
+      <button (click)="next2()" class="blog-next">
+        <i class="fa-solid fa-chevron-right"></i>
+      </button>
+      <div class="blog-slide" id="blog-slide">
+        <ngx-slick-carousel
+          class="carousel"
+          #slickModal2="slick-carousel"
+          [config]="slideConfig2"
+        >
+          <div
+            ngxSlickItem
+            *ngFor="let slide of slide_bds_hot"
+            class="blog-item"
+          >
+            <div class="blog-image">
+              <img src="{{ slide['image'] }}" alt="" />
+            </div>
+            <div class="blog-title">
+              <a href="">{{ slide["title"] }}</a>
+            </div>
+            <div class="blog-price">
+              <span class="price-sale"
+                >Giá:
+                {{
+                  slide["sale_price"] > 0
+                    ? formatVnd(slide["sale_price"])
+                    : formatVnd(slide["price"])
+                }}</span
+              >
+              <span class="price-root" *ngIf="slide['sale_price'] > 0">
+                {{ formatVnd(slide["price"]) }}</span
+              >
+            </div>
+            <div class="blog-detail">
+              {{ slide["description"] }} <br />
+              Địa chỉ: {{ slide["address"] }}
+            </div>
+          </div>
+        </ngx-slick-carousel>
+      </div>
+    </section>
+    <section style="margin-top: 50px">
+      <img src="{{ banner1 }}" width="100%" alt="" />
+    </section>
+    <section class="blog-section3">
+      <header>
+        <h3>{{ title_nhadat_ban["name"] }}</h3>
+        <div class="list-title">
+          <ul>
+            <li *ngFor="let item of nav_nhadat_ban">
+              <a routerLink="{{ item['url'] }}">{{ item["name"] }}</a>
+            </li>
+          </ul>
+          <a class="see-more" routerLink="{{ title_nhadat_ban['url'] }}"
+            >Xem thêm <i class="fa-solid fa-angles-right"></i
+          ></a>
+        </div>
+      </header>
+    </section>
+    <section class="list-blog2">
+      <div class="blog-item" *ngFor="let item of data_nhadat_ban">
+        <div class="blog-image">
+          <img src="{{ item['image'] }}" alt="" />
+        </div>
+        <div class="blog-title">
+          <a routerLink="{{ item['url'] }}">{{ item["title"] }}</a>
+        </div>
+        <div class="blog-price">
+          <span class="price-sale"
+            >Giá:
+            {{
+              item["price_sale"] > 0
+                ? formatVnd(item["price_sale"])
+                : formatVnd(item["price"])
+            }}</span
+          >
+          <span class="price-root" *ngIf="item['price_sale'] > 0">
+            {{ formatVnd(item["price"]) }}</span
+          >
+        </div>
+        <div class="blog-detail">
+          {{ item["description"] }} <br />
+          Địa chỉ: {{ item["address"] }}
+        </div>
+      </div>
+    </section>
+    <section
+      class="banner2"
+      style="background-image: url('{{ banner2 }}');"
+    ></section>
+    <section class="duan-hot2">
+      <header class="header-duan-hot">
+        <h3>{{ title_duan["name"] }}</h3>
+        <a routerLink="{{ title_duan['url'] }}"
+          >Xem thêm <i class="fa-solid fa-angles-right"></i
+        ></a>
+      </header>
+    </section>
+    <section class="main-duan-hot2">
+      <button (click)="prev3()" class="duan-prev">
+        <i class="fa-solid fa-chevron-left"></i>
+      </button>
+      <div class="duan-slide" id="duan-slide">
+        <ngx-slick-carousel
+          class="carousel"
+          #slickModal3="slick-carousel"
+          [config]="slideConfig3"
+        >
+          <div ngxSlickItem *ngFor="let slide of duan_hot" class="duan-item">
+            <div class="duan-image">
+              <img src="{{ slide['image'] }}" alt="" />
+            </div>
+            <div class="duan-title">
+              <a href="">{{ slide["title"] }}</a>
+            </div>
+            <div class="duan-detail">
+              {{ slide["description"] }}
+            </div>
+          </div>
+        </ngx-slick-carousel>
+      </div>
+      <button (click)="next3()" class="duan-next">
+        <i class="fa-solid fa-chevron-right"></i>
+      </button>
+    </section>
+    <section class="contact-form">
+      <div class="main-contact">
+        <header>{{ contact_header }}</header>
+        <div class="text">
+          {{ contact_detail }}
+        </div>
+        <form action="">
+          <div class="left">
+            <input type="text" placeholder="Họ và tên.." />
+            <input type="text" placeholder="Điện thoại của bạn.." />
+            <input type="text" placeholder="Địa chỉ email.." />
+            <select name="" id="">
+              <option value="0">Bất động sản quan tâm</option>
+              <option
+                *ngFor="let item of select_loainhadats"
+                value="{{ item['id'] }}"
+              >
+                {{ item["name"] }}
+              </option>
+            </select>
+          </div>
+          <div class="right">
+            <textarea
+              name=""
+              id=""
+              placeholder="Vui lòng ghi rõ nhu cầu của bạn..."
+              cols="30"
+              rows="10"
+            ></textarea>
+            <button
+              type="button
+            "
+            >
+              Gửi liên hệ ngay
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
+    <section class="demo-info">
+      <div class="main">
+        <header>{{ detail_title }}</header>
+        <span>{{ detail_us }}</span>
+        <div class="see-more"><button>XEM THÊM</button></div>
+      </div>
+    </section>
+    <section class="tintuc-hot2">
+      <header class="header-tintuc-hot">
+        <h3>{{ title_tintuc["name"] }}</h3>
+      </header>
+    </section>
+    <section class="main-tintuc-hot2">
+      <button class="tintuc-prev" (click)="prev4()">
+        <i class="fa-solid fa-chevron-left"></i>
+      </button>
+      <div class="tintuc-slide" id="tintuc-slide">
+        <ngx-slick-carousel
+          class="carousel"
+          #slickModal4="slick-carousel"
+          [config]="slideConfig4"
+        >
+          <div ngxSlickItem *ngFor="let slide of tintucs" class="tintuc-item">
+            <div class="tintuc-image">
+              <img src="{{ slide['image'] }}" alt="" />
+            </div>
+            <div class="tintuc-title">
+              <a routerLink="{{ slide['url'] }}">
+                <span class="text">{{ slide["title"] }}</span></a
+              >
+            </div>
+          </div></ngx-slick-carousel
+        >
+      </div>
+      <button class="tintuc-next" (click)="next4()">
+        <i class="fa-solid fa-chevron-right"></i>
+      </button>
+    </section>
+    <section class="thuonghieu-hot2">
+      <header class="header-thuonghieu-hot">
+        <h3>{{ title_doitac["name"] }}</h3>
+      </header>
+    </section>
+    <section class="main-thuonghieu-hot2">
+      <button (click)="prev5()" class="thuonghieu-prev">
+        <i class="fa-solid fa-chevron-left"></i>
+      </button>
+      <div class="thuonghieu-slide" id="thuonghieu-slide">
+        <ngx-slick-carousel
+          class="carousel"
+          #slickModal5="slick-carousel"
+          [config]="slideConfig5"
+        >
+          <div
+            ngxSlickItem
+            *ngFor="let slide of imageDoitac"
+            class="thuonghieu-item"
+          >
+            <div class="thuonghieu-image">
+              <img src="{{ slide }}" alt="" />
+            </div>
+          </div>
+        </ngx-slick-carousel>
+      </div>
+      <button (click)="next5()" class="thuonghieu-next">
+        <i class="fa-solid fa-chevron-right"></i>
+      </button>
+    </section>
+  </ng-template>
+</ng-template>

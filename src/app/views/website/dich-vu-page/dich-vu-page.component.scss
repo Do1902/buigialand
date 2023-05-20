@@ -1,0 +1,56 @@
+.header {
+  .main-header {
+    padding-bottom: 20px;
+    border-bottom: solid 1px rgb(168, 168, 168);
+  }
+  padding: 0 50px;
+  margin-top: 50px;
+  margin-bottom: 20px;
+  @media (max-width: 400px) {
+    padding: 0 10px;
+  }
+}
+.dich-vu {
+  margin-bottom: 30px;
+  padding: 0 50px;
+  .main-dich-vu {
+    display: flex;
+    flex-wrap: wrap;
+    .item-dich-vu {
+      width: calc(100% / 3);
+      padding: 10px;
+      .main-item {
+        .image {
+          width: 100%;
+          img {
+            width: 100%;
+          }
+        }
+        .title {
+          margin-top: 10px;
+          font-size: 18px;
+          font-weight: 600;
+
+          padding: 0 10px;
+          a {
+            color: black;
+            &:hover {
+              color: #59c71e;
+            }
+          }
+        }
+        .detail {
+          margin-top: 10px;
+          font-size: 16px;
+          font-weight: 400;
+          color: black;
+          padding: 0 10px 10px 10px;
+        }
+        &:hover {
+          box-shadow: 0px 0 20px 5px rgb(206, 206, 206, 0.5);
+          background-color: white;
+        }
+      }
+    }
+  }
+}

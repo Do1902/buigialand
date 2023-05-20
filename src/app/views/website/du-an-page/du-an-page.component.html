@@ -1,0 +1,20 @@
+<section class="header">
+  <div class="main-header"><h3>Dự Án</h3></div>
+</section>
+<section class="du-an">
+  <div class="main-du-an">
+    <div *ngFor="let item of tintucs" class="item-du-an">
+      <div class="content">
+        <div class="image">
+          <img src="{{ item['image'] }}" alt="" />
+        </div>
+        <div class="title">
+          <a routerLink=""> {{ item["title"] }}</a>
+        </div>
+        <div class="detail">
+          {{ item["detail"] }}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

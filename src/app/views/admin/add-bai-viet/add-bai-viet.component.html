@@ -1,0 +1,169 @@
+<div class="main1">
+  <label for="type">Chọn loại bài viết</label>
+  <select name="" id="type" [(ngModel)]="type" (change)="ResetData()">
+    <option value="">Chọn loại</option>
+    <option value="bds">Bất động sản</option>
+    <option value="dich-vu">Dịch vụ</option>
+    <option value="tin-tuc">Tin tức</option>
+    <option value="du-an">Dự án</option>
+  </select>
+</div>
+<div class="main" *ngIf="type != ''">
+  <div class="title">Hình ảnh</div>
+  <div class="secion">
+    <img
+      [src]="
+        baiviet['image'] == ''
+          ? 'https://kinsta.com/wp-content/uploads/2020/09/imag-file-types-1024x512.png'
+          : baiviet['image']
+      "
+      alt=""
+      width="100%"
+    />
+    <br />
+    <label for="file" class="custom-file-label"> Chọn ảnh </label>
+    <input
+      type="file"
+      accept="image/*"
+      id="file"
+      #fileInput
+      style="display: none"
+      (change)="onFileSelected(fileInput)"
+    />
+  </div>
+  <div class="er">{{ ErImage }}</div>
+  <div class="title">Tiêu đề</div>
+  <div class="section">
+    <input
+      type="text"
+      class="text"
+      [(ngModel)]="baiviet['title']"
+      placeholder="Nhập tiêu đề"
+    />
+  </div>
+  <div class="er">{{ ErTitle }}</div>
+  <div class="title">Mô tả</div>
+  <div class="secion">
+    <input
+      type="text"
+      class="text"
+      [(ngModel)]="baiviet['description']"
+      placeholder="Nhập mô tả"
+    />
+  </div>
+  <div class="er">{{ ErDes }}</div>
+  <div class="title">Chi tiết</div>
+  <div class="secion">
+    <textarea
+      rows=""
+      cols=""
+      [(ngModel)]="baiviet['detail']"
+      placeholder="Nhập chi tiết"
+    ></textarea>
+  </div>
+  <div class="er">{{ ErDetail }}</div>
+  <ng-container *ngIf="type == 'bds'">
+    <div class="title">Diện tích</div>
+    <div class="section">
+      <input
+        type="number"
+        class="text"
+        [(ngModel)]="baiviet['dientich']"
+        placeholder="Nhập diện tích"
+      />
+    </div>
+    <div class="er">{{ ErDienTich }}</div>
+
+    <div class="title">Số lượng phòng ngủ</div>
+    <div class="section">
+      <input
+        type="number"
+        class="text"
+        [(ngModel)]="baiviet['pn']"
+        placeholder="Nhập số phòng ngủ"
+      />
+    </div>
+    <div class="er">{{ ErPn }}</div>
+
+    <div class="title">Số lượng wc</div>
+    <div class="section">
+      <input
+        type="number"
+        class="text"
+        [(ngModel)]="baiviet['wc']"
+        placeholder="Nhập số lượng wc"
+      />
+    </div>
+    <div class="er">{{ ErWc }}</div>
+
+    <div class="title">Địa chỉ</div>
+
+    <div class="secion">
+      <input
+        type="text"
+        class="text"
+        [(ngModel)]="baiviet['address']"
+        placeholder="Nhập địa chỉ"
+      />
+    </div>
+    <div class="er">{{ ErAddress }}</div>
+
+    <div class="title">Giá</div>
+    <div class="section">
+      <input
+        type="number"
+        class="text"
+        [(ngModel)]="baiviet['price']"
+        placeholder="Nhập giá gốc"
+      />
+    </div>
+    <div class="er">{{ ErPrice }}</div>
+
+    <div class="title">Giá đã giảm</div>
+    <div class="section">
+      <input
+        type="number"
+        class="text"
+        [(ngModel)]="baiviet['sale_price']"
+        placeholder="Nhập giá sale"
+      />
+    </div>
+  </ng-container>
+
+  <div class="title">Nổi bật</div>
+  <div class="section">
+    <div class="noibat">
+      <div class="item">
+        <input
+          type="radio"
+          name="noibat"
+          id="yes"
+          [(ngModel)]="baiviet['noibat']"
+          [value]="1"
+        />
+        <label for="yes">Có</label>
+      </div>
+      <div class="item">
+        <input
+          type="radio"
+          name="noibat"
+          id="no"
+          [value]="0"
+          [(ngModel)]="baiviet['noibat']"
+        /><label for="no">Không</label>
+      </div>
+    </div>
+  </div>
+  <div class="title">Tác vụ</div>
+  <div class="section">
+    <div class="actions">
+      <div class="item">
+        <button class="delete-change" (click)="ResetData()">Xóa dữ liệu</button>
+        <button class="save" (click)="SavePost()">Lưu bài viết</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="loading" id="loader" *ngIf="waitSave == true">
+  <div class="loader"></div>
+</div>

@@ -1,0 +1,62 @@
+.dashboard {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  .slide-bar {
+    width: 200px;
+    // position: fixed;
+    top: 0px;
+    left: 0px;
+  }
+  .main-actions {
+    // padding: 10px;
+    width: 60%;
+    flex-grow: 1;
+  }
+}
+.support {
+  background-color: rgb(31, 31, 97);
+  display: flex;
+  padding: 15px;
+  justify-content: space-between;
+  .left {
+    width: 50%;
+    display: flex;
+    div.phone {
+      color: white;
+
+      a {
+        color: white;
+        &:hover {
+          color: aquamarine;
+        }
+      }
+      margin: auto;
+    }
+    div.email {
+      margin: auto;
+      color: white;
+
+      a {
+        color: white;
+        &:hover {
+          color: aquamarine;
+        }
+      }
+    }
+  }
+  .right {
+    width: 50%;
+    text-align: right;
+    display: flex;
+    justify-content: flex-end;
+    div.logout {
+      align-items: center;
+      color: white;
+      cursor: pointer;
+      &:hover {
+        color: aquamarine;
+      }
+    }
+  }
+}

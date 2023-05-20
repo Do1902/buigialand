@@ -1,0 +1,44 @@
+<div class="main">
+  <div class="header">Quản trị website</div>
+  <div class="slidebar">
+    <ul>
+      <li>
+        <div class="danhmuc" (click)="showDropdown(2)">
+          <i class="fa-solid fa-image"></i>Hình ảnh
+        </div>
+        <ul class="danhmuccon" [ngClass]="{ active: dropdown === 2 }">
+          <li><a routerLink="/admin/image/trang-chu">Trang chủ</a></li>
+        </ul>
+      </li>
+      <li>
+        <div class="danhmuc" (click)="showDropdown(3)">
+          <i class="fa-solid fa-pen-to-square"></i> Bài viết
+        </div>
+        <ul class="danhmuccon" [ngClass]="{ active: dropdown === 3 }">
+          <li><a routerLink="/admin/bai-viet/bds">Bất động sản</a></li>
+          <li><a routerLink="/admin/bai-viet/du-an">Dự án</a></li>
+          <li><a routerLink="/admin/bai-viet/dich-vu">Dịch vụ</a></li>
+          <li><a routerLink="/admin/bai-viet/tin-tuc">Tin tức</a></li>
+          <li><a routerLink="/admin/add-bai-viet">Thêm bài viết</a></li>
+        </ul>
+      </li>
+      <li>
+        <div class="danhmuc" (click)="showDropdown(4)">
+          <i class="fa-solid fa-bars"></i>Danh mục
+        </div>
+        <ul class="danhmuccon" [ngClass]="{ active: dropdown === 4 }">
+          <li><a routerLink="/admin/danh-muc">NavBar</a></li>
+        </ul>
+      </li>
+      <li>
+        <div class="danhmuc" (click)="showDropdown(5)">
+          <i class="fa-solid fa-gear"></i>Cài đặt
+        </div>
+        <ul class="danhmuccon" [ngClass]="{ active: dropdown === 5 }">
+          <li><a routerLink="/admin/settings">Thông tin website</a></li>
+          <li><a routerLink="/admin/password">Mật khẩu</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</div>

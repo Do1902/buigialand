@@ -1,0 +1,525 @@
+<ng-container *ngIf="loading == true; else elseTemplate">
+  <div
+    style="
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    "
+  >
+    <div class="spinner-border" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+</ng-container>
+<ng-template #elseTemplate>
+  <div class="main" *ngIf="type == 'bds'">
+    <div class="actions">
+      <input
+        type="text"
+        id="search"
+        placeholder="Tìm kiếm bài viết..."
+        [(ngModel)]="search"
+        (ngModelChange)="OnChangeSearch()"
+      />
+      <select
+        class="sort"
+        [(ngModel)]="sortBy"
+        (ngModelChange)="resetSort()"
+        name=""
+        id=""
+      >
+        <option value="null">Sắp xếp</option>
+        <option value="tangdan">Giá tăng dần</option>
+        <option value="giamdan">Giá giảm dần</option>
+        <option value="a-z">Tên a-z</option>
+        <option value="z-a">Tên z-a</option>
+      </select>
+      <select
+        class="show"
+        [(ngModel)]="showItem"
+        name=""
+        (ngModelChange)="resetShow()"
+        id=""
+      >
+        <option value="5">5 hàng</option>
+        <option value="15">15 hàng</option>
+        <option value="20">25 hàng</option>
+        <option value="50">50 hàng</option>
+        <option value="200">200 hàng</option>
+        <option value="500">500 hàng</option>
+      </select>
+      <div class="show-all">
+        <input
+          type="checkbox"
+          [(ngModel)]="showAll"
+          (ngModelChange)="getShowAll()"
+          name=""
+          id="show-all"
+        />
+        <label for="show-all"> Hiện tất </label>
+      </div>
+    </div>
+    <div class="table">
+      <table>
+        <thead>
+          <th>Hình ảnh</th>
+          <th>Tiêu đề</th>
+          <th>Giá</th>
+          <th>Giá sale</th>
+          <th>Mô tả</th>
+          <th>Chi tiết</th>
+          <th>Địa chỉ</th>
+          <th>Nổi bật</th>
+          <th>Tác vụ</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of showCurrentPage">
+            <td><img src="{{ item['image'] }}" alt="" /></td>
+            <td>{{ item["title"] }}</td>
+            <td>{{ formatVnd(item["price"]) }}</td>
+            <td>
+              {{
+                item["sale_price"] != null
+                  ? formatVnd(item["sale_price"])
+                  : "Không có"
+              }}
+            </td>
+            <td>{{ item["title"] }}</td>
+            <td class="detail">{{ item["detail"] }}</td>
+            <td>{{ item["address"] }}</td>
+            <td class="text-center">
+              <ng-container *ngIf="item['noibat'] == 1; else elseTemplate">
+                <div
+                  class="seo"
+                  (click)="OnChangeNoiBat(item['id'], item['noibat'])"
+                >
+                  <i class="fa-solid fa-square-check"></i>
+                </div>
+              </ng-container>
+              <ng-template #elseTemplate>
+                <div
+                  class="seo"
+                  (click)="OnChangeNoiBat(item['id'], item['noibat'])"
+                >
+                  <i class="fa-regular fa-square-check"></i>
+                </div>
+              </ng-template>
+            </td>
+            <td>
+              <a class="link" routerLink="/admin/edit-bai-viet/{{ item['id'] }}"
+                ><button class="btn btn-primary">Sửa</button></a
+              >
+              <button class="btn btn-danger" (click)="DeletePost(item['id'])">
+                Xóa
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="pagination" *ngIf="totalPage > 1">
+      <ul>
+        <li
+          *ngIf="currentPage !== 1 && totalPage > 5"
+          (click)="currentPage = 1"
+        >
+          <i class="fa-solid fa-angles-left"></i>
+        </li>
+        <li *ngIf="currentPage !== 1 && totalPage > 5" (click)="prevPage()">
+          <i class="fa-solid fa-chevron-left"></i>
+        </li>
+        <li
+          *ngFor="let i of [].constructor(totalPage); let stt = index"
+          [ngClass]="{ active: currentPage === stt + 1 }"
+          (click)="setCurrentPage(stt + 1)"
+        >
+          {{ stt + 1 }}
+        </li>
+        <li
+          *ngIf="
+            currentPage !== [].constructor(totalPage).length && totalPage > 5
+          "
+          (click)="nextPage()"
+        >
+          <i class="fa-solid fa-chevron-right"></i>
+        </li>
+        <li
+          *ngIf="
+            currentPage !== [].constructor(totalPage).length && totalPage > 5
+          "
+          (click)="currentPage = [].constructor(totalPage).length"
+        >
+          <i class="fa-solid fa-angles-right"></i>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="main" *ngIf="type == 'dich-vu'">
+    <div class="actions">
+      <input
+        type="text"
+        id="search"
+        placeholder="Tìm kiếm bài viết..."
+        [(ngModel)]="search"
+        (ngModelChange)="OnChangeSearch()"
+      />
+      <select
+        class="sort"
+        [(ngModel)]="sortBy"
+        (ngModelChange)="resetSort()"
+        name=""
+        id=""
+      >
+        <option value="null">Sắp xếp</option>
+        <option value="a-z">Tên a-z</option>
+        <option value="z-a">Tên z-a</option>
+      </select>
+      <select
+        class="show"
+        [(ngModel)]="showItem"
+        name=""
+        (ngModelChange)="resetShow()"
+        id=""
+      >
+        <option value="5">5 hàng</option>
+        <option value="15">15 hàng</option>
+        <option value="20">25 hàng</option>
+        <option value="50">50 hàng</option>
+        <option value="200">200 hàng</option>
+        <option value="500">500 hàng</option>
+      </select>
+      <div class="show-all">
+        <input
+          type="checkbox"
+          [(ngModel)]="showAll"
+          (ngModelChange)="getShowAll()"
+          name=""
+          id="show-all"
+        />
+        <label for="show-all"> Hiện tất </label>
+      </div>
+    </div>
+    <div class="table">
+      <table>
+        <thead>
+          <th>Hình ảnh</th>
+          <th>Tiêu đề</th>
+          <th>Mô tả</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of showCurrentPage">
+            <td><img src="{{ item['image'] }}" alt="" /></td>
+            <td>{{ item["title"] }}</td>
+
+            <td>{{ item["detail"] }}</td>
+
+            <td>
+              <a class="link" routerLink="/admin/edit-bai-viet/{{ item['id'] }}"
+                ><button class="btn btn-primary">Sửa</button></a
+              >
+              <button class="btn btn-danger" (click)="DeletePost(item['id'])">
+                Xóa
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="pagination" *ngIf="totalPage > 1">
+      <ul>
+        <li
+          *ngIf="currentPage !== 1 && totalPage > 5"
+          (click)="currentPage = 1"
+        >
+          <i class="fa-solid fa-angles-left"></i>
+        </li>
+        <li *ngIf="currentPage !== 1 && totalPage > 5" (click)="prevPage()">
+          <i class="fa-solid fa-chevron-left"></i>
+        </li>
+        <li
+          *ngFor="let i of [].constructor(totalPage); let stt = index"
+          [ngClass]="{ active: currentPage === stt + 1 }"
+          (click)="setCurrentPage(stt + 1)"
+        >
+          {{ stt + 1 }}
+        </li>
+        <li
+          *ngIf="
+            currentPage !== [].constructor(totalPage).length && totalPage > 5
+          "
+          (click)="nextPage()"
+        >
+          <i class="fa-solid fa-chevron-right"></i>
+        </li>
+        <li
+          *ngIf="
+            currentPage !== [].constructor(totalPage).length && totalPage > 5
+          "
+          (click)="currentPage = [].constructor(totalPage).length"
+        >
+          <i class="fa-solid fa-angles-right"></i>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="main" *ngIf="type == 'tin-tuc'">
+    <div class="actions">
+      <input
+        type="text"
+        id="search"
+        placeholder="Tìm kiếm bài viết..."
+        [(ngModel)]="search"
+        (ngModelChange)="OnChangeSearch()"
+      />
+      <select
+        class="sort"
+        [(ngModel)]="sortBy"
+        (ngModelChange)="resetSort()"
+        name=""
+        id=""
+      >
+        <option value="null">Sắp xếp</option>
+        <option value="a-z">Tên a-z</option>
+        <option value="z-a">Tên z-a</option>
+      </select>
+      <select
+        class="show"
+        [(ngModel)]="showItem"
+        name=""
+        (ngModelChange)="resetShow()"
+        id=""
+      >
+        <option value="5">5 hàng</option>
+        <option value="15">15 hàng</option>
+        <option value="20">25 hàng</option>
+        <option value="50">50 hàng</option>
+        <option value="200">200 hàng</option>
+        <option value="500">500 hàng</option>
+      </select>
+      <div class="show-all">
+        <input
+          type="checkbox"
+          [(ngModel)]="showAll"
+          (ngModelChange)="getShowAll()"
+          name=""
+          id="show-all"
+        />
+        <label for="show-all"> Hiện tất </label>
+      </div>
+    </div>
+    <div class="table">
+      <table>
+        <thead>
+          <th>Hình ảnh</th>
+          <th>Tiêu đề</th>
+          <th>Mô tả</th>
+          <th>Nổi bật</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of showCurrentPage">
+            <td><img src="{{ item['image'] }}" alt="" /></td>
+            <td>{{ item["title"] }}</td>
+            <td>{{ item["detail"] }}</td>
+            <td class="text-center">
+              <ng-container *ngIf="item['noibat'] == 1; else elseTemplate">
+                <div
+                  class="seo"
+                  (click)="OnChangeNoiBat(item['id'], item['noibat'])"
+                >
+                  <i class="fa-solid fa-square-check"></i>
+                </div>
+              </ng-container>
+              <ng-template #elseTemplate>
+                <div
+                  class="seo"
+                  (click)="OnChangeNoiBat(item['id'], item['noibat'])"
+                >
+                  <i class="fa-regular fa-square-check"></i>
+                </div>
+              </ng-template>
+            </td>
+            <td>
+              <a class="link" routerLink="/admin/edit-bai-viet/{{ item['id'] }}"
+                ><button class="btn btn-primary">Sửa</button></a
+              >
+              <button class="btn btn-danger" (click)="DeletePost(item['id'])">
+                Xóa
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="pagination" *ngIf="totalPage > 1">
+      <ul>
+        <li
+          *ngIf="currentPage !== 1 && totalPage > 5"
+          (click)="currentPage = 1"
+        >
+          <i class="fa-solid fa-angles-left"></i>
+        </li>
+        <li *ngIf="currentPage !== 1 && totalPage > 5" (click)="prevPage()">
+          <i class="fa-solid fa-chevron-left"></i>
+        </li>
+        <li
+          *ngFor="let i of [].constructor(totalPage); let stt = index"
+          [ngClass]="{ active: currentPage === stt + 1 }"
+          (click)="setCurrentPage(stt + 1)"
+        >
+          {{ stt + 1 }}
+        </li>
+        <li
+          *ngIf="
+            currentPage !== [].constructor(totalPage).length && totalPage > 5
+          "
+          (click)="nextPage()"
+        >
+          <i class="fa-solid fa-chevron-right"></i>
+        </li>
+        <li
+          *ngIf="
+            currentPage !== [].constructor(totalPage).length && totalPage > 5
+          "
+          (click)="currentPage = [].constructor(totalPage).length"
+        >
+          <i class="fa-solid fa-angles-right"></i>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="main" *ngIf="type == 'du-an'">
+    <div class="actions">
+      <input
+        type="text"
+        id="search"
+        placeholder="Tìm kiếm bài viết..."
+        [(ngModel)]="search"
+        (ngModelChange)="OnChangeSearch()"
+      />
+      <select
+        class="sort"
+        [(ngModel)]="sortBy"
+        (ngModelChange)="resetSort()"
+        name=""
+        id=""
+      >
+        <option value="null">Sắp xếp</option>
+        <option value="a-z">Tên a-z</option>
+        <option value="z-a">Tên z-a</option>
+      </select>
+      <select
+        class="show"
+        [(ngModel)]="showItem"
+        name=""
+        (ngModelChange)="resetShow()"
+        id=""
+      >
+        <option value="5">5 hàng</option>
+        <option value="15">15 hàng</option>
+        <option value="20">25 hàng</option>
+        <option value="50">50 hàng</option>
+        <option value="200">200 hàng</option>
+        <option value="500">500 hàng</option>
+      </select>
+      <div class="show-all">
+        <input
+          type="checkbox"
+          [(ngModel)]="showAll"
+          (ngModelChange)="getShowAll()"
+          name=""
+          id="show-all"
+        />
+        <label for="show-all"> Hiện tất </label>
+      </div>
+    </div>
+    <div class="table">
+      <table>
+        <thead>
+          <th>Hình ảnh</th>
+          <th>Tiêu đề</th>
+          <th>Chi tiết</th>
+          <th>Nổi bật</th>
+          <th>Tác vụ</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of showCurrentPage">
+            <td><img src="{{ item['image'] }}" alt="" /></td>
+            <td>{{ item["title"] }}</td>
+            <td>{{ item["detail"] }}</td>
+            <td class="text-center">
+              <ng-container *ngIf="item['noibat'] == 1; else elseTemplate">
+                <div
+                  class="seo"
+                  (click)="OnChangeNoiBat(item['id'], item['noibat'])"
+                >
+                  <i class="fa-solid fa-square-check"></i>
+                </div>
+              </ng-container>
+              <ng-template #elseTemplate>
+                <div
+                  class="seo"
+                  (click)="OnChangeNoiBat(item['id'], item['noibat'])"
+                >
+                  <i class="fa-regular fa-square-check"></i>
+                </div>
+              </ng-template>
+            </td>
+            <td>
+              <a class="link" routerLink="/admin/edit-bai-viet/{{ item['id'] }}"
+                ><button class="btn btn-primary">Sửa</button></a
+              >
+              <button class="btn btn-danger" (click)="DeletePost(item['id'])">
+                Xóa
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="pagination" *ngIf="totalPage > 1">
+      <ul>
+        <li
+          *ngIf="currentPage !== 1 && totalPage > 5"
+          (click)="currentPage = 1"
+        >
+          <i class="fa-solid fa-angles-left"></i>
+        </li>
+        <li *ngIf="currentPage !== 1 && totalPage > 5" (click)="prevPage()">
+          <i class="fa-solid fa-chevron-left"></i>
+        </li>
+        <li
+          *ngFor="let i of [].constructor(totalPage); let stt = index"
+          [ngClass]="{ active: currentPage === stt + 1 }"
+          (click)="setCurrentPage(stt + 1)"
+        >
+          {{ stt + 1 }}
+        </li>
+        <li
+          *ngIf="
+            currentPage !== [].constructor(totalPage).length && totalPage > 5
+          "
+          (click)="nextPage()"
+        >
+          <i class="fa-solid fa-chevron-right"></i>
+        </li>
+        <li
+          *ngIf="
+            currentPage !== [].constructor(totalPage).length && totalPage > 5
+          "
+          (click)="currentPage = [].constructor(totalPage).length"
+        >
+          <i class="fa-solid fa-angles-right"></i>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="loading" id="loader" *ngIf="waitSave == true">
+    <div class="loader"></div>
+  </div>
+</ng-template>

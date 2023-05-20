@@ -1,0 +1,84 @@
+.main {
+  width: 100%;
+  max-width: 200px;
+  background-color: rgb(69, 69, 70);
+  min-height: 100vh;
+  position: fixed;
+  .header {
+    color: white;
+    text-align: center;
+    padding: 15px 0;
+    background-color: rgb(42, 42, 59);
+  }
+  .slidebar {
+    ul {
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      list-style-type: none;
+      margin: auto;
+      li {
+        .danhmuc {
+          padding: 15px 0;
+          border-bottom: solid 1px rgb(177, 172, 172, 0.5);
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          padding-left: 20px;
+          color: white;
+          width: 100%;
+          height: 100%;
+          i {
+            width: 20px;
+            margin-right: 5px;
+          }
+          &:hover {
+            background-color: rgb(60, 60, 63);
+          }
+        }
+      }
+    }
+    .danhmuccon {
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      list-style-type: none;
+      margin: auto;
+      visibility: hidden;
+      max-height: 0px;
+      opacity: 0;
+      transform: scaleY(0);
+      transform-origin: top;
+      transition: all 0.1s ease-in-out;
+      background-color: rgb(109, 109, 109);
+      li {
+        a {
+          padding: 10px 0;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          padding-left: 20px;
+          color: white;
+          width: 100%;
+          height: 100%;
+          i {
+            width: 20px;
+            margin-right: 5px;
+          }
+          &:hover {
+            background-color: rgb(60, 60, 63);
+          }
+          border-bottom: solid 1px rgb(177, 172, 172, 0.5);
+        }
+      }
+      &.active {
+        visibility: visible;
+        max-height: max-content;
+        opacity: 1;
+        transform: scaleY(1);
+        transform-origin: top;
+        transition: all 0.2s ease-in-out;
+      }
+    }
+  }
+}

@@ -1,0 +1,21 @@
+<div class="dashboard">
+  <div class="slide-bar">
+    <app-slide-bar></app-slide-bar>
+  </div>
+  <div class="main-actions">
+    <div class="support">
+      <div class="left">
+        <div class="phone">Hỗ trợ: <a href="tel:0763006609">0763006609</a></div>
+        <div class="email">
+          Email <a href="mailto:duyhvhv123@gmail.com">duyhvhv123@gmail.com</a>
+        </div>
+      </div>
+      <div class="right">
+        <div class="logout" (click)="Logout()">
+          <i class="fa-solid fa-power-off"></i> Đăng Xuất
+        </div>
+      </div>
+    </div>
+    <router-outlet></router-outlet>
+  </div>
+</div>

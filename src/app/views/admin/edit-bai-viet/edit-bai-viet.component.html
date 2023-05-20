@@ -1,0 +1,322 @@
+<ng-container *ngIf="loading == true; else elseTemplate">
+  <div
+    style="
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    "
+  >
+    <div class="spinner-border" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+</ng-container>
+<ng-template #elseTemplate>
+  <div class="main" *ngIf="type == 'bds'">
+    <div class="title">Hình ảnh</div>
+    <div class="secion">
+      <img [src]="dataImage" alt="" width="100%" />
+      <br />
+      <label for="file" class="custom-file-label"> Chọn ảnh </label>
+      <input
+        type="file"
+        accept="image/*"
+        id="file"
+        #fileInput
+        style="display: none"
+        (change)="onFileSelected(fileInput)"
+      />
+    </div>
+    <div class="title">Tiêu đề</div>
+    <div class="section">
+      <input
+        type="text"
+        class="text"
+        [(ngModel)]="baivietEdit['title']"
+        placeholder="Nhập tiêu đề"
+      />
+    </div>
+    <div class="title">Mô tả</div>
+    <div class="secion">
+      <input
+        type="text"
+        class="text"
+        [(ngModel)]="baivietEdit['description']"
+        placeholder="Nhập mô tả"
+      />
+    </div>
+    <div class="title">Chi tiết</div>
+    <div class="secion">
+      <textarea
+        rows=""
+        cols=""
+        [(ngModel)]="baivietEdit['detail']"
+        placeholder="Nhập chi tiết"
+      ></textarea>
+    </div>
+    <div class="title">Diện tích</div>
+    <div class="section">
+      <input
+        type="number"
+        class="text"
+        [(ngModel)]="baivietEdit['dientich']"
+        placeholder="Nhập diện tích"
+      />
+    </div>
+    <div class="title">Số lượng phòng ngủ</div>
+    <div class="section">
+      <input
+        type="number"
+        class="text"
+        [(ngModel)]="baivietEdit['pn']"
+        placeholder="Nhập số phòng ngủ"
+      />
+    </div>
+    <div class="title">Số lượng wc</div>
+    <div class="section">
+      <input
+        type="number"
+        class="text"
+        [(ngModel)]="baivietEdit['wc']"
+        placeholder="Nhập số lượng wc"
+      />
+    </div>
+    <div class="title">Địa chỉ</div>
+
+    <div class="secion">
+      <input
+        type="text"
+        class="text"
+        [(ngModel)]="baivietEdit['address']"
+        placeholder="Nhập địa chỉ"
+      />
+    </div>
+    <div class="title">Giá</div>
+    <div class="section">
+      <input
+        type="number"
+        class="text"
+        [(ngModel)]="baivietEdit['price']"
+        placeholder="Nhập giá gốc"
+      />
+    </div>
+    <div class="title">Giá đã giảm</div>
+    <div class="section">
+      <input
+        type="number"
+        class="text"
+        [(ngModel)]="baivietEdit['sale_price']"
+        placeholder="Nhập giá sale"
+      />
+    </div>
+    <div class="title">Nổi bật</div>
+    <div class="section">
+      <div class="noibat">
+        <div class="item">
+          <input
+            type="radio"
+            name="noibat"
+            id="yes"
+            [(ngModel)]="baivietEdit['noibat']"
+            [value]="1"
+          />
+          <label for="yes">Có</label>
+        </div>
+        <div class="item">
+          <input
+            type="radio"
+            name="noibat"
+            id="no"
+            [value]="0"
+            [(ngModel)]="baivietEdit['noibat']"
+          /><label for="no">Không</label>
+        </div>
+      </div>
+    </div>
+    <div class="title">Tác vụ</div>
+    <div class="section">
+      <div class="actions">
+        <div class="item">
+          <button class="delete-change" (click)="ResetData()">
+            Xóa thay đổi
+          </button>
+          <button class="save" (click)="SavePost()">Lưu thay đổi</button>
+          <button class="delete" (click)="DeletePost()">Xóa bài viết</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="main" *ngIf="type == 'dich-vu'">
+    <div class="title">Hình ảnh</div>
+    <div class="secion">
+      <img [src]="dataImage" alt="" width="100%" />
+      <br />
+      <label for="file" class="custom-file-label"> Chọn ảnh </label>
+      <input
+        type="file"
+        accept="image/*"
+        id="file"
+        #fileInput
+        style="display: none"
+        (change)="onFileSelected(fileInput)"
+      />
+    </div>
+    <div class="title">Tiêu đề</div>
+    <div class="section">
+      <input
+        type="text"
+        class="text"
+        [(ngModel)]="baivietEdit['title']"
+        placeholder="Nhập tiêu đề"
+      />
+    </div>
+    <div class="title">Mô tả</div>
+    <div class="secion">
+      <input
+        type="text"
+        class="text"
+        [(ngModel)]="baivietEdit['description']"
+        placeholder="Nhập mô tả"
+      />
+    </div>
+    <div class="title">Chi tiết</div>
+    <div class="secion">
+      <textarea
+        rows=""
+        cols=""
+        [(ngModel)]="baivietEdit['detail']"
+        placeholder="Nhập chi tiết"
+      ></textarea>
+    </div>
+
+    <div class="title">Tác vụ</div>
+    <div class="section">
+      <div class="actions">
+        <div class="item">
+          <button class="delete-change" (click)="ResetData()">
+            Xóa thay đổi
+          </button>
+          <button class="save" (click)="SavePost()">Lưu thay đổi</button>
+          <button class="delete" (click)="DeletePost()">Xóa bài viết</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="main" *ngIf="type == 'du-an'">
+    <div class="title">Hình ảnh</div>
+    <div class="secion">
+      <img [src]="dataImage" alt="" width="100%" />
+      <br />
+      <label for="file" class="custom-file-label"> Chọn ảnh </label>
+      <input
+        type="file"
+        accept="image/*"
+        id="file"
+        #fileInput
+        style="display: none"
+        (change)="onFileSelected(fileInput)"
+      />
+    </div>
+    <div class="title">Tiêu đề</div>
+    <div class="section">
+      <input
+        type="text"
+        class="text"
+        [(ngModel)]="baivietEdit['title']"
+        placeholder="Nhập tiêu đề"
+      />
+    </div>
+    <div class="title">Mô tả</div>
+    <div class="secion">
+      <input
+        type="text"
+        class="text"
+        [(ngModel)]="baivietEdit['description']"
+        placeholder="Nhập mô tả"
+      />
+    </div>
+    <div class="title">Chi tiết</div>
+    <div class="secion">
+      <textarea
+        rows=""
+        cols=""
+        [(ngModel)]="baivietEdit['detail']"
+        placeholder="Nhập chi tiết"
+      ></textarea>
+    </div>
+
+    <div class="title">Tác vụ</div>
+    <div class="section">
+      <div class="actions">
+        <div class="item">
+          <button class="delete-change" (click)="ResetData()">
+            Xóa thay đổi
+          </button>
+          <button class="save" (click)="SavePost()">Lưu thay đổi</button>
+          <button class="delete" (click)="DeletePost()">Xóa bài viết</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="main" *ngIf="type == 'tin-tuc'">
+    <div class="title">Hình ảnh</div>
+    <div class="secion">
+      <img [src]="dataImage" alt="" width="100%" />
+      <br />
+      <label for="file" class="custom-file-label"> Chọn ảnh </label>
+      <input
+        type="file"
+        accept="image/*"
+        id="file"
+        #fileInput
+        style="display: none"
+        (change)="onFileSelected(fileInput)"
+      />
+    </div>
+    <div class="title">Tiêu đề</div>
+    <div class="section">
+      <input
+        type="text"
+        class="text"
+        [(ngModel)]="baivietEdit['title']"
+        placeholder="Nhập tiêu đề"
+      />
+    </div>
+    <div class="title">Mô tả</div>
+    <div class="secion">
+      <input
+        type="text"
+        class="text"
+        [(ngModel)]="baivietEdit['description']"
+        placeholder="Nhập mô tả"
+      />
+    </div>
+    <div class="title">Chi tiết</div>
+    <div class="secion">
+      <textarea
+        rows=""
+        cols=""
+        [(ngModel)]="baivietEdit['detail']"
+        placeholder="Nhập chi tiết"
+      ></textarea>
+    </div>
+
+    <div class="title">Tác vụ</div>
+    <div class="section">
+      <div class="actions">
+        <div class="item">
+          <button class="delete-change" (click)="ResetData()">
+            Xóa thay đổi
+          </button>
+          <button class="save" (click)="SavePost()">Lưu thay đổi</button>
+          <button class="delete" (click)="DeletePost()">Xóa bài viết</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="loading" id="loader" *ngIf="waitSave == true">
+    <div class="loader"></div>
+  </div>
+</ng-template>

@@ -1,0 +1,90 @@
+<section class="header"><h3>Liên hệ</h3></section>
+<section class="main">
+  <div class="infor">
+    <div class="name-cty">{{ name_cty }}</div>
+    <div class="address">
+      <span>Địa chỉ:</span><span>{{ address }}</span>
+    </div>
+    <div class="phone">
+      <span>Số điện thoại:</span><span>{{ all_phone }}</span>
+    </div>
+    <div class="email">
+      <span>Email:</span
+      ><span>
+        {{ email["detail"] }}
+      </span>
+    </div>
+    <div class="website">
+      <span>Website:</span>
+      <span>{{ web["detail"] }}</span>
+    </div>
+  </div>
+  <div class="form">
+    <form action="" method="post">
+      <div class="name">
+        <label for="name">Tên <span style="color: red">*</span></label
+        ><br />
+        <input
+          type="text"
+          name=""
+          id="name"
+          placeholder="Ví dụ: Nguyễn Văn A"
+        />
+      </div>
+      <div class="email">
+        <label for="email">Email <span style="color: red">*</span></label
+        ><br />
+        <input
+          type="text"
+          name=""
+          id="email"
+          placeholder="Ví dụ: Abc@gmail.com"
+        />
+      </div>
+      <div class="address">
+        <label for="address">Địa chỉ</label><br />
+        <input
+          type="text"
+          name=""
+          id="address"
+          placeholder="Ví dụ: Đường abc..."
+        />
+      </div>
+      <div class="phone">
+        <label for="phone">Số điện thoại</label><br />
+        <input type="text" name="" id="phone" placeholder="Ví dụ: 0123456789" />
+      </div>
+      <div class="title">
+        <label for="title">Tiêu đề <span style="color: red">*</span></label
+        ><br />
+        <input type="text" name="" id="title" placeholder="Ví dụ: Mua đất" />
+      </div>
+      <div class="content">
+        <label for="content">Nội dung</label><br />
+        <input
+          type="text"
+          name=""
+          id="content"
+          placeholder="Ví dụ: Tôi muốn mua biệt thự nghìn tỉ..."
+        />
+      </div>
+      <div class="note">
+        Các mục có ( <span style="color: red">*</span> ) là trường bắt buộc
+      </div>
+      <div class="submit">
+        <button type="submit" class="button">Gửi</button>
+      </div>
+    </form>
+  </div>
+</section>
+<section class="map">
+  <iframe
+    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.870596191454!2d106.63580947422322!3d10.821213658367672!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752965c82190a9%3A0x7572291d6a12bca8!2zMzM3IFBo4bqhbSBWxINuIELhuqFjaCwgUGjGsOG7nW5nIDE1LCBUw6JuIELDrG5oLCBUaMOgbmggcGjhu5EgSOG7kyBDaMOtIE1pbmgsIFZp4buHdCBOYW0!5e0!3m2!1svi!2s!4v1683186733529!5m2!1svi!2s"
+    width="100%"
+    height="450"
+    style="border: 0"
+    allowfullscreen=""
+    loading="lazy"
+    referrerpolicy="no-referrer-when-downgrade"
+  ></iframe>
+</section>
