@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { environment } from 'buigialand/src/app/enviroment';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -32,7 +33,7 @@ export class LoginDashComponent {
         password: this.password,
       };
       this.http
-        .post('http://127.0.0.1:8000/api/login-admin', body)
+        .post(`${environment.apiUrl}/login-admin`, body)
         .subscribe((data: any) => {
           this.loader = false;
           if (

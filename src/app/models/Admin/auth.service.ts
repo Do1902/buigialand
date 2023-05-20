@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from 'src/app/enviroment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'http://127.0.0.1:8000/api/admin';
+  private apiUrl = `${environment.apiUrl}/admin`;
   constructor(private http: HttpClient) {}
   getAuth(token: any) {
     const headers = new HttpHeaders({
