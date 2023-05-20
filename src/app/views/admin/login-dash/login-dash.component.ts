@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { environment } from 'buigialand/src/app/enviroment';
+import { environment } from 'src/app/enviroment';
 import Swal from 'sweetalert2';
 
 @Component({
