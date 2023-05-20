@@ -8,7 +8,7 @@
     <link
       rel="icon"
       type="image/x-icon"
-      href="http://127.0.0.1:8000/storage/icon-bui-gia-land.jpg"
+      href="https://hanashop.crysys.net/public/storage/icon-bui-gia-land.jpg"
     />
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
@@ -28,7 +28,7 @@
   <body>
     <app-root></app-root>
     <script>
-      fetch("http://hanashop.crysys.net/public/api/title")
+      fetch("https://hanashop.crysys.net/public/api/title")
         .then((response) => response.json())
         .then((data) => {
           document.title = data.title.detail;
